@@ -2,7 +2,9 @@ package event
 
 import (
 	"log"
+	"os"
 	"os/exec"
+	"sync"
 	"time"
 )
 
@@ -100,6 +102,7 @@ type Event struct {
 var (
 	lastUpdate time.Time
 	run        *exec.Cmd
+	lock       sync.Mutex
 )
 
 func init() {
@@ -134,6 +137,8 @@ func StopRun() {
 func Clean() {
 	log.Println("Try Clean old files.")
 	cmd := exec.Command("/bin/bash", "-c", "cd ../;clean.sh")
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
 	err := cmd.Run()
 	if err == nil {
 		_ = cmd.Wait()
@@ -143,6 +148,8 @@ func Clean() {
 func Build() {
 	log.Println("Try Build New Target.")
 	cmd := exec.Command("/bin/bash", "-c", "cd ../;build.sh")
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
 	err := cmd.Run()
 	if err == nil {
 		_ = cmd.Wait()
@@ -152,6 +159,8 @@ func Build() {
 func UpdateRepo() {
 	log.Println("Try Update Repos.")
 	cmd := exec.Command("/bin/bash", "-c", "cd ../;git pull origin master;")
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
 	err := cmd.Run()
 	if err == nil {
 		_ = cmd.Wait()
@@ -161,15 +170,20 @@ func UpdateRepo() {
 func Run() {
 	log.Println("Try Run new.")
 	cmd := exec.Command("/bin/bash", "-c", "cd ../;run.sh")
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
 	_ = cmd.Run()
 	run = cmd
 }
 
 func Workflow() {
+	lock.Lock()
 	log.Println("Start to Run workflow!")
 	StopRun()
 	Clean()
 	UpdateRepo()
 	Build()
 	Run()
+	lastUpdate = time.Now()
+	lock.Unlock()
 }
