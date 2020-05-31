@@ -14,7 +14,7 @@ func main() {
 		})
 	})
 
-	if err := r.Run(); err != nil {
+	if err := r.Run("0.0.0.0:8080"); err != nil {
 		panic(err)
 	}
 }
