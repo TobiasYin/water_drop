@@ -172,7 +172,7 @@ func UpdateRepo() {
 
 func Run() {
 	log.Println("Try Run new.")
-	cmd := exec.Command("/bin/bash", "-c", "cd ../;./run.sh")
+	cmd := exec.Command("/bin/bash", "-c", "cd ../;output/main")
 	run = cmd
 	cmd.Stdout = logFile
 	cmd.Stderr = errFile
