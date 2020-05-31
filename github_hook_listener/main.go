@@ -24,7 +24,7 @@ func main() {
 	r.GET("/restart", func(context *gin.Context) {
 		event.Workflow()
 	})
-
+	go event.Workflow()
 	if err := r.Run("0.0.0.0:9090"); err != nil {
 		panic(err)
 	}

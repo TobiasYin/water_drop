@@ -112,11 +112,11 @@ var (
 func init() {
 	var err error
 	lastUpdate = time.Now()
-	logFile, err = os.OpenFile(logFilename, os.O_APPEND|os.O_WRONLY, 0777)
+	logFile, err = os.OpenFile(logFilename, os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0777)
 	if err != nil {
 		panic(err)
 	}
-	errFile, err = os.OpenFile(errFilename, os.O_APPEND|os.O_WRONLY, 0777)
+	errFile, err = os.OpenFile(errFilename, os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0777)
 	if err != nil {
 		panic(err)
 	}
