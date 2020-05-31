@@ -154,7 +154,7 @@ func Clean() {
 	cmd := exec.Command("/bin/bash", "-c", "cd ../;./clean.sh")
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
-	_ := cmd.Run()
+	_ = cmd.Run()
 }
 
 func Build() {
@@ -162,7 +162,7 @@ func Build() {
 	cmd := exec.Command("/bin/bash", "-c", "cd ../;./build.sh")
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
-	_ := cmd.Run()
+	_ = cmd.Run()
 }
 
 func UpdateRepo() {
@@ -170,7 +170,7 @@ func UpdateRepo() {
 	cmd := exec.Command("/bin/bash", "-c", "cd ../;git pull origin master;")
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
-	_ := cmd.Run()
+	_ = cmd.Run()
 }
 
 func Run() {
