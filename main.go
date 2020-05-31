@@ -1,6 +1,8 @@
 package main
 
 import (
+	"github.com/TobiasYin/water_drop/api"
+	"github.com/TobiasYin/water_drop/middlewares"
 	_ "github.com/TobiasYin/water_drop/model"
 	"github.com/gin-gonic/gin"
 )
@@ -13,6 +15,8 @@ func main() {
 			"msg": "hello world",
 		})
 	})
+	middlewares.InitMiddleware(r)
+	api.InitUrl(r)
 
 	if err := r.Run("0.0.0.0:8080"); err != nil {
 		panic(err)
