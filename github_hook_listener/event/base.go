@@ -100,13 +100,26 @@ type Event struct {
 }
 
 var (
-	lastUpdate time.Time
-	run        *exec.Cmd
-	lock       sync.Mutex
+	lastUpdate  time.Time
+	run         *exec.Cmd
+	lock        sync.Mutex
+	logFilename = "log.txt"
+	errFilename = "err.txt"
+	logFile     *os.File
+	errFile     *os.File
 )
 
 func init() {
+	var err error
 	lastUpdate = time.Now()
+	logFile, err = os.OpenFile(logFilename, os.O_APPEND|os.O_WRONLY, 0777)
+	if err != nil {
+		panic(err)
+	}
+	errFile, err = os.OpenFile(errFilename, os.O_APPEND|os.O_WRONLY, 0777)
+	if err != nil {
+		panic(err)
+	}
 }
 
 func IsTarget(e Event) bool {
@@ -170,8 +183,8 @@ func UpdateRepo() {
 func Run() {
 	log.Println("Try Run new.")
 	cmd := exec.Command("/bin/bash", "-c", "cd ../;./run.sh")
-	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
+	cmd.Stdout = logFile
+	cmd.Stderr = errFile
 	_ = cmd.Run()
 	run = cmd
 }
