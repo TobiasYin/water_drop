@@ -1,7 +1,6 @@
 package main
 
 import (
-	_ "github.com/TobiasYin/water_drop/model"
 	"github.com/gin-gonic/gin"
 )
 

@@ -103,3 +103,5 @@ fabric.properties
 .idea
 
 go.sum
+
+.db
