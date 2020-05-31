@@ -136,7 +136,7 @@ func StopRun() {
 
 func Clean() {
 	log.Println("Try Clean old files.")
-	cmd := exec.Command("/bin/bash", "-c", "cd ../;clean.sh")
+	cmd := exec.Command("/bin/bash", "-c", "cd ../;./clean.sh")
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 	err := cmd.Run()
@@ -147,7 +147,7 @@ func Clean() {
 
 func Build() {
 	log.Println("Try Build New Target.")
-	cmd := exec.Command("/bin/bash", "-c", "cd ../;build.sh")
+	cmd := exec.Command("/bin/bash", "-c", "cd ../;./build.sh")
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 	err := cmd.Run()
@@ -169,7 +169,7 @@ func UpdateRepo() {
 
 func Run() {
 	log.Println("Try Run new.")
-	cmd := exec.Command("/bin/bash", "-c", "cd ../;run.sh")
+	cmd := exec.Command("/bin/bash", "-c", "cd ../;./run.sh")
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 	_ = cmd.Run()
