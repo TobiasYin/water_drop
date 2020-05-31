@@ -141,7 +141,9 @@ func StopRun() {
 		return
 	}
 	go func() {
-		_ = run.Process.Kill()
+		if run.Process != nil {
+			_ = run.Process.Kill()
+		}
 	}()
 	_ = run.Wait()
 	run = nil
@@ -152,10 +154,7 @@ func Clean() {
 	cmd := exec.Command("/bin/bash", "-c", "cd ../;./clean.sh")
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
-	err := cmd.Run()
-	if err == nil {
-		_ = cmd.Wait()
-	}
+	_ := cmd.Run()
 }
 
 func Build() {
@@ -163,10 +162,7 @@ func Build() {
 	cmd := exec.Command("/bin/bash", "-c", "cd ../;./build.sh")
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
-	err := cmd.Run()
-	if err == nil {
-		_ = cmd.Wait()
-	}
+	_ := cmd.Run()
 }
 
 func UpdateRepo() {
@@ -174,10 +170,7 @@ func UpdateRepo() {
 	cmd := exec.Command("/bin/bash", "-c", "cd ../;git pull origin master;")
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
-	err := cmd.Run()
-	if err == nil {
-		_ = cmd.Wait()
-	}
+	_ := cmd.Run()
 }
 
 func Run() {
@@ -186,7 +179,7 @@ func Run() {
 	run = cmd
 	cmd.Stdout = logFile
 	cmd.Stderr = errFile
-	err := cmd.Run()
+	err := cmd.Start()
 	if err != nil {
 		log.Println("Run New Error!")
 	}
