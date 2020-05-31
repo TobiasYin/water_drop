@@ -34,6 +34,7 @@ type Card struct {
 	Importance   int
 	Deadline     time.Time
 	Repeat       int
+	RepeatTimes  int
 	Status       int
 	Image        string
 	Diary        string `gorm: "type:text;"`
