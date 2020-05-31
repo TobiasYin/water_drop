@@ -1,6 +1,7 @@
 package event
 
 import (
+	"log"
 	"os/exec"
 	"time"
 )
@@ -199,6 +200,7 @@ func IsTarget(e Event) bool {
 }
 
 func StopRun() {
+	log.Println("Try Stop old.")
 	if run == nil {
 		return
 	}
@@ -210,6 +212,7 @@ func StopRun() {
 }
 
 func Clean() {
+	log.Println("Try Clean old files.")
 	cmd := exec.Command("/bin/bash", "-c", "cd ../;clean.sh")
 	err := cmd.Run()
 	if err == nil {
@@ -218,6 +221,7 @@ func Clean() {
 }
 
 func Build() {
+	log.Println("Try Build New Target.")
 	cmd := exec.Command("/bin/bash", "-c", "cd ../;build.sh")
 	err := cmd.Run()
 	if err == nil {
@@ -226,6 +230,7 @@ func Build() {
 }
 
 func UpdateRepo() {
+	log.Println("Try Update Repos.")
 	cmd := exec.Command("/bin/bash", "-c", "cd ../;git pull origin master;")
 	err := cmd.Run()
 	if err == nil {
@@ -234,12 +239,14 @@ func UpdateRepo() {
 }
 
 func Run() {
+	log.Println("Try Run new.")
 	cmd := exec.Command("/bin/bash", "-c", "cd ../;run.sh")
 	_ = cmd.Run()
 	run = cmd
 }
 
 func Workflow() {
+	log.Println("Start to Run workflow!")
 	StopRun()
 	Clean()
 	UpdateRepo()

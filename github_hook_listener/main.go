@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/TobiasYin/water_drop/github_hook_listener/event"
 	"github.com/gin-gonic/gin"
+	"log"
 )
 
 func main() {
@@ -15,6 +16,7 @@ func main() {
 			return
 		}
 		if event.IsTarget(e) {
+			log.Println("Found Target Event!")
 			event.Workflow()
 		}
 	})
