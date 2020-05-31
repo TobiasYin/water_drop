@@ -115,7 +115,7 @@ func IsTarget(e Event) bool {
 	}
 	pushAt := time.Unix(int64(e.Repository.PushedAt), 0)
 
-	if lastUpdate.Sub(pushAt) < 0 {
+	if lastUpdate.Sub(pushAt) > 0 {
 		return false
 	}
 
