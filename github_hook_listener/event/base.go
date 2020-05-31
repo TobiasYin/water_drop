@@ -183,10 +183,15 @@ func UpdateRepo() {
 func Run() {
 	log.Println("Try Run new.")
 	cmd := exec.Command("/bin/bash", "-c", "cd ../;./run.sh")
+	run = cmd
 	cmd.Stdout = logFile
 	cmd.Stderr = errFile
-	_ = cmd.Run()
-	run = cmd
+	err := cmd.Run()
+	if err != nil {
+		log.Println("Run New Error!")
+	}
+	_ = cmd.Wait()
+	log.Println("Old already killed")
 }
 
 func Workflow() {
@@ -196,7 +201,7 @@ func Workflow() {
 	Clean()
 	UpdateRepo()
 	Build()
-	Run()
+	go Run()
 	lastUpdate = time.Now()
 	lock.Unlock()
 }
