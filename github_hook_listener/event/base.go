@@ -140,12 +140,9 @@ func StopRun() {
 	if run == nil {
 		return
 	}
-	go func() {
-		if run.Process != nil {
-			_ = run.Process.Kill()
-		}
-	}()
-	_ = run.Wait()
+	if run.Process != nil {
+		_ = run.Process.Kill()
+	}
 	run = nil
 }
 
